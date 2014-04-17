@@ -45,10 +45,10 @@
     <td><%= r.cancelled ? t('Yes') : t('No') %></td>
     <td><%= prt(r, :construction_start_date).strftime('%Y/%m/%d') if r.construction_start_date.present? %></td>
     <td><%= prt(r, :construction_finish_date).strftime('%Y/%m/%d') if r.construction_finish_date.present? %></td>
-    <td><%= link_to t('BOM'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape eval(ExtConstructionProjectx.index_bom_path.to_s)}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.bom_resource.to_s) %></td>
+    <td><%= link_to t('BOM'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI.escape(eval(ExtConstructionProjectx.index_bom_path.to_s))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.bom_resource.to_s) %></td>
     <td><%= link_to t('Contracts'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(ExtConstructionProjectx.index_contract_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.contract_resource) %></td>
     <td><%= link_to t('Team Members'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(ExtConstructionProjectx.index_team_member_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.team_member_resource) %></td>
-    <td><%= link_to t('Payment Requests'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape eval(ExtConstructionProjectx.index_payment_request_path.to_s)}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.payment_request_resource.to_s) %></td>
+    <td><%= link_to t('Payment Requests'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI.escape(eval(ExtConstructionProjectx.index_payment_request_path.to_s))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.payment_request_resource.to_s) %></td>
     <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_project_path(r)}" , :class => BUTTONS_CLS['action'] if has_action_right?('update', params[:controller], r )  %></td>
     
   </tr>
