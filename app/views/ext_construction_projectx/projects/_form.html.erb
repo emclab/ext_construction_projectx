@@ -1,0 +1,34 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: @erb_code %>
+  
+<% else %>
+<%= simple_form_for @project do |f| %>
+  <%= f.input :name, :label => t('Project Name'), :readonly => readonly?(@project, 'name') %> 
+  <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
+              :label => t('Customer'), :placeholder => t('Enter Customer Keyword'), :required => true unless readonly?(@project, 'customer_id')%>
+  <%= f.input :customer_name, :label => t('Customer'), :readonly => true, :input_html => {:value => @customer.short_name} if readonly?(@project, 'customer_id') %>
+  <%= f.input :customer_contact, :label => t('Customer Contact'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'customer_contact')  %>
+  <%= f.input :project_desp, :label => t('Project Description'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'project_desp') %>
+  <%= f.input :construction_spec, :label => t('Construction Spec'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'construction_spec') %>
+  <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'other_spec') %>
+  <%= f.input :construction_address, :label => t('Construction Address'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'construction_address') %>
+  <%= f.input :turn_over_requirement, :label => t('Turnover Requirement'), :input_html => { :rows => 3}, :readonly => readonly?(@project, 'turn_over_requirement') %>  
+  <%= f.input :construction_start_date, :label => t('Construction Start Date'), :as => :string, :readonly => readonly?(@project, 'construction_start_date') %>
+  <%= f.input :construction_finish_date, :label => t('Construction Finish Date'), :as => :string, :readonly => readonly?(@project, 'construction_finish_date') %>
+  <%= f.input :turn_over_date, :label => t('Turnover Date'), :as => :string, :readonly => readonly?(@project, 'turn_over_date') %>
+  <%= f.input :awarded, :label => t('Awarded'), :as => :boolean unless readonly?(@project, 'awarded') %>
+  <%= f.input :awarded_noupdate, :label => t('Awarded'), :input_html => {:value => (@project.awarded ? t('Yes') : t('No'))} if readonly?(@project, 'awarded') %>
+  <%= f.input :completed, :label => t('Completed'), :as => :boolean unless readonly?(@project, 'completed') %>
+  <%= f.input :completed_noupdate, :label => t('Completed'), :input_html => {:value => (@project.completed ? t('Yes') : t('No'))} if readonly?(@project, 'completed') %>
+  <%= f.input :cancelled, :label => t('Cancelled'), :as => :boolean unless readonly?(@project, 'cancelled') %>
+  <%= f.input :cancelled_noupdate, :label => t('Cancelled'), :input_html => {:value => (@project.cancelled ? t('Yes') : t('No'))} if readonly?(@project, 'cancelled') %>
+  <%= f.input :last_updated_by_name, :label => t('Last Updated By'), :input_html => {:value => @project.last_updated_by.name}, :readonly => true %>
+     
+  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
+    
+<% end %>
+
+<% end %>
+
+

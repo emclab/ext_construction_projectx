@@ -1,0 +1,78 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+<% else %>
+<div class="pagination"><%= will_paginate models %></div>
+
+<table class="table table-striped">
+  <tr>
+    <th>#</th>
+    <th><%= t('Customer') %></th>
+    <th><%= t('Project Name') %></th>
+    <th><%= t('Construction Address') %></th>
+    <th><%= t('Construction Spec') %></th>
+    <th><%= t('Project Description') %></th>
+    <th><%= t('Awarded') %></th>
+    <th><%= t('Completed') %></th>
+    <th><%= t('Cancelled') %></th>
+    <th><%= t('Construction Start Date') %></th>
+    <th><%= t('Construction Finish Date') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% models.each do |r| %>
+  <tr>
+    <% if has_action_right?('show', params[:controller], r) %>
+        <td><%= link_to r.id, SUBURI + "/authentify/view_handler?index=1&url=#{project_path(r)}"  %></td>
+    <% else %>
+        <td><%= r.id %></td>
+    <% end %>
+  	<% if has_action_right?('show',ExtConstructionProjectx.customer_class.to_s.underscore.pluralize, r.customer ) %>
+  	  <td><%= link_to r.customer.short_name, SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(ExtConstructionProjectx.show_customer_path))}"  %></td>
+  	<% else %>
+  	  <td><%= prt(r, 'customer.short_name') %></td>
+  	<% end %>  	    
+    <td><%= prt(r, :name) %></td> 
+    <td><%= prt(r, :construction_address) %></td> 
+    <td><%= prt(r, :construction_spec) %></td>
+    <td><%= prt(r, 'project_desp') %></td>
+    <td><%= r.awarded ? t('Yes') : t('No') %></td>
+    <td><%= r.completed ? t('Yes') : t('No') %></td>
+    <td><%= r.cancelled ? t('Yes') : t('No') %></td>
+    <td><%= prt(r, :construction_start_date).strftime('%Y/%m/%d') if r.construction_start_date.present? %></td>
+    <td><%= prt(r, :construction_finish_date).strftime('%Y/%m/%d') if r.construction_finish_date.present? %></td>
+    <td><%= link_to t('BOM'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape eval(ExtConstructionProjectx.index_bom_path.to_s)}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.bom_resource.to_s) %></td>
+    <td><%= link_to t('Contracts'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(ExtConstructionProjectx.index_contract_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.contract_resource) %></td>
+    <td><%= link_to t('Team Members'), SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(eval(ExtConstructionProjectx.index_team_member_path))}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.team_member_resource) %></td>
+    <td><%= link_to t('Payment Requests'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape eval(ExtConstructionProjectx.index_payment_request_path.to_s)}", :class => BUTTONS_CLS['action']  if has_action_right?('index', ExtConstructionProjectx.payment_request_resource.to_s) %></td>
+    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_project_path(r)}" , :class => BUTTONS_CLS['action'] if has_action_right?('update', params[:controller], r )  %></td>
+    
+  </tr>
+<% end %>
+</table>
+
+<table class="table table-striped">
+  <tr>
+    <th>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('New Project'), SUBURI + "/authentify/view_handler?index=1&url=#{new_project_path(:customer_id => @customer.id)}", :class => BUTTONS_CLS['action'] if @customer && has_action_right?('create', params[:controller]) %>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('New Project'), SUBURI + "/authentify/view_handler?index=1&url=#{new_project_path}", :class => BUTTONS_CLS['action'] if @customer.nil? && has_action_right?('create', params[:controller]) %>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('Search'), SUBURI + "/authentify/view_handler?index=1&url=#{search_projects_path}", :class => BUTTONS_CLS['action'] if has_action_right?('search', params[:controller]) %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('Stats'), SUBURI + "/authentify/view_handler?index=1&url=#{stats_projects_path}", :class => BUTTONS_CLS['action'] if has_action_right?('stats', params[:controller]) %>
+    </th>
+  </tr>
+</table>
+
+<% end %>
+
+
+
