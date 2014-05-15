@@ -47,7 +47,7 @@ module ExtConstructionProjectx
     end
 
     def customer_name_autocomplete=(name)
-      self.customer = HeavyMachineryProjectx.customer_class.find_by_name(name) if name.present?
+      self.customer = ExtConstructionProjectx.customer_class.find_by_name(name) if name.present?
     end                         
   end
 end

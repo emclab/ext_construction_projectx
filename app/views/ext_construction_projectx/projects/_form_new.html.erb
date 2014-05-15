@@ -9,7 +9,7 @@
   <%= f.input :customer_contact, :label => t('Customer Contact'), :input_html => { :rows => 3} %>
   <%= f.input :customer_id, :as => :hidden, :readonly => true, :input_html => {:value => @customer.id} if @customer%>
   <%= f.input :name, :label => t('Project Name') %> 
-  <%= f.input :project_desp, :label => t('Project Description') %> 
+  <%= f.input :project_desp, :label => t('Project Description'), :input_html => { :rows => 3} %> 
   <%= f.input :construction_spec, :label => t('Construction Spec'), :input_html => { :rows => 3} %>
   <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 3} %>
   <%= f.input :construction_address, :label => t('Construction Address'), :input_html => { :rows => 3} %>
