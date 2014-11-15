@@ -31,6 +31,8 @@ module ExtConstructionProjectx
     validates_presence_of :construction_address, :construction_spec  #, :project_num 
     validates :customer_id, :presence => true,
                             :numericality => {:greater_than => 0, :only_integer => true} 
+    validates :sales_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'sales_id.present?'
+    validates :project_coordinator_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'project_coordinator_id.present?'
     validates :status_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'status_id.present?'
     validates :category_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'category_id.present?'
     validate :dynamic_validate 
