@@ -1,20 +1,21 @@
 module ExtConstructionProjectx
   class Project < ActiveRecord::Base
     after_initialize :default_init, :if => :new_record?
-    attr_accessor :project_name, :customer_name, :last_updated_by_name, :status_name, :category_name, :awarded_noupdate, :completed_noupdate, :cancelled_noupdate
-    attr_accessible :awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, 
-                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, 
-                    :turn_over_requirement, :category_id, :project_desp, :customer_name_autocomplete, :customer_name,
+    attr_accessor :project_name, :customer_name, :last_updated_by_name, :status_name, :category_name, :awarded_noupdate, :completed_noupdate, :cancelled_noupdate,
+                  :sales_name, :project_coordinator_name
+    attr_accessible :awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :project_coordinator_id,
+                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :sales_id,
+                    :turn_over_requirement, :category_id, :project_desp, :customer_name_autocomplete, :customer_name, :sales_name, :project_coordinator_name,
                     :as => :role_new
-    attr_accessible :awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, 
-                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, 
-                    :turn_over_requirement, :category_id, :project_desp, :customer_name_autocomplete, :last_updated_by_name,
+    attr_accessible :awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :sales_id,
+                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :project_coordinator_id,
+                    :turn_over_requirement, :category_id, :project_desp, :customer_name_autocomplete, :last_updated_by_name, :sales_name, :project_coordinator_name,
                     :as => :role_update
     
-    attr_accessor :project_id_s, :keyword_s, :start_date_s, :end_date_s, :customer_id_s, :status_s, :cancelled_s, :completed_s, :awarded_s,
+    attr_accessor :project_id_s, :keyword_s, :start_date_s, :end_date_s, :customer_id_s, :status_s, :cancelled_s, :completed_s, :awarded_s, :sales_id_s, :project_coordinator_id_s,
                   :category_id_s, :time_frame_s
 
-    attr_accessible :project_id_s, :keyword_s, :start_date_s, :end_date_s, :customer_id_s, :status_s, :cancelled_s, :completed_s,
+    attr_accessible :project_id_s, :keyword_s, :start_date_s, :end_date_s, :customer_id_s, :status_s, :cancelled_s, :completed_s, :sales_id_s, :project_coordinator_id_s,
                     :time_frame_s, :category_id_s, :awarded_s,  
                     :as => :role_search_stats
     
@@ -22,6 +23,8 @@ module ExtConstructionProjectx
     belongs_to :category, :class_name => 'Commonx::MiscDefinition'
     belongs_to :customer, :class_name => ExtConstructionProjectx.customer_class.to_s
     belongs_to :last_updated_by, :class_name => 'Authentify::User'
+    belongs_to :sales, :class_name => 'Authentify::User'
+    belongs_to :project_coordinator, :class_name => 'Authentify::User'
     
     validates :name, :presence => true,
                      :uniqueness => {:case_sensitive => false, :message => I18n.t('Duplicate Name!')}

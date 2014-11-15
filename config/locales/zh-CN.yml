@@ -117,4 +117,7 @@ zh-CN:
   Project Description : '项目介绍'
   BOM : '材料清单'
   Team Members : '项目人员'
-  Checkout : '出库'
+  Checkout Items : '出库细目'
+  Sales : '业务员'
+  Project Coordinator : '项目协调人'
+  Project Lead : '项目主管'
