@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   mount ExtConstructionProjectx::Engine => "/ext_construction_projectx"
   mount Commonx::Engine => "/commonx"
   mount Authentify::Engine => '/authentify'
-  mount CustomerAuthentify::Engine => 'customer_login'
   mount Kustomerx::Engine => '/customer'
   mount Searchx::Engine => '/search'
   mount SimpleContractx::Engine => '/contract'
