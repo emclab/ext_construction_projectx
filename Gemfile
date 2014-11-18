@@ -10,6 +10,7 @@ gem "jquery-rails", "~> 2.3.0"
 gem "will_paginate"
 
 gem 'authentify', :path => '../authentify'  #for rspec test
+gem 'customer_authentify', :path => '../customer_authentify'
 gem 'commonx', :path => '../commonx'
 gem 'kustomerx', :path => '../kustomerx'
 gem 'searchx', :path => '../searchx'

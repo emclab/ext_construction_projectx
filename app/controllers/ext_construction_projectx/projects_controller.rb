@@ -17,6 +17,7 @@ module ExtConstructionProjectx
       @title = t('New Project')
       @project = ExtConstructionProjectx::Project.new
       @erb_code = find_config_const('project_new_view', 'ext_construction_projectx')
+      @js_erb_code = find_config_const('project_new_js_view', 'ext_construction_projectx')
     end
 
 
@@ -28,6 +29,7 @@ module ExtConstructionProjectx
       else
         flash[:notice] = t('Data Error. Not Saved!')
         @erb_code = find_config_const('project_new_view', 'ext_construction_projectx')
+        @js_erb_code = find_config_const('project_new_js_view', 'ext_construction_projectx')
         @customer = ExtConstructionProjectx.customer_class.find_by_id(params[:project][:customer_id]) if params[:project].present? && params[:project][:customer_id].present?
         render 'new'
       end
@@ -37,6 +39,7 @@ module ExtConstructionProjectx
       @title = t('Edit Project')
       @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
       @erb_code = find_config_const('project_edit_view', 'ext_construction_projectx')
+      @js_erb_code = find_config_const('project_edit_js_view', 'ext_construction_projectx')
     end
 
     def update
@@ -47,6 +50,7 @@ module ExtConstructionProjectx
         else
           flash[:notice] = t('Data Error. Not Updated!')
           @erb_code = find_config_const('project_edit_view', 'ext_construction_projectx')
+          @js_erb_code = find_config_const('project_edit_js_view', 'ext_construction_projectx')
           render 'edit'
         end
     end

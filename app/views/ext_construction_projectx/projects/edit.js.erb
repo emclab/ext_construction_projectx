@@ -1,0 +1,16 @@
+<% if @view_in_config && @js_erb_code %>
+  <%= render inline: ERB.new(@js_erb_code).result(binding) %>
+  
+<% else %>
+<% if params[:project].present? && params[:project][:customer_name_autocomplete].present? %>
+  
+    <% customer = ExtConstructionProject.customer_class.find_by_name(params[:project][:customer_name_autocomplete].strip)%>
+    <% if customer %>
+      $('#project_customer_id').val("<%=customer.id%>"); 
+    <% else %>
+      $('#project_customer_id').val(""); 
+    <% end %> 
+ 
+<% end %>
+
+<% end %>
