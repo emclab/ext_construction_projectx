@@ -2,8 +2,8 @@ require_dependency "ext_construction_projectx/application_controller"
 
 module ExtConstructionProjectx
   class ProjectsController < ApplicationController
-    before_filter :require_employee
-    before_filter :load_parent_record
+    before_action :require_employee
+    before_action :load_parent_record
 
     def index
       @title = t('Projects')

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "LinkTests" do
+RSpec.describe "LinkTests", type: :request do
   describe "GET /ext_construction_projectx_link_tests" do
     mini_btn = 'btn btn-mini '
     ActionView::CompiledTemplates::BUTTONS_CLS =
@@ -55,34 +55,34 @@ describe "LinkTests" do
     it "works! (now write some real specs)" do
       qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id, :customer_id => @cust.id)
       
-      visit projects_path
+      visit ext_construction_projectx.projects_path
       click_link qs.id.to_s
-      page.should have_content('Project Info')
+      expect(page).to have_content('Project Info')
       click_link 'New Log'
-      page.should have_content('Log')
+      expect(page).to have_content('Log')
       #save_and_open_page
-      visit projects_path() 
+      visit ext_construction_projectx.projects_path() 
       save_and_open_page
       click_link 'Edit'
       #save_and_open_page
-      page.should have_content('Edit Project')
+      expect(page).to have_content('Edit Project')
       fill_in 'project_name', :with => 'new name'
       click_button 'Save'
       save_and_open_page
       #wrong data
-      visit projects_path() 
+      visit ext_construction_projectx.projects_path() 
       click_link 'Edit'
-      page.should have_content('Edit Project')
+      expect(page).to have_content('Edit Project')
       fill_in 'project_name', :with => ''
       click_button 'Save'
       save_and_open_page
       
-      visit projects_path(:customer_id => @cust.id)
+      visit ext_construction_projectx.projects_path(:customer_id => @cust.id)
       save_and_open_page
-      page.should have_content('Projects')
+      expect(page).to have_content('Projects')
       click_link 'New Project'
-      save_and_open_page
-      page.should have_content('New Project')
+      #save_and_open_page
+      expect(page).to have_content('New Project')
       fill_in 'project_name', :with => 'new project'
       #fill_in 'project_customer_id', :with => @cust.id
       fill_in 'project_construction_address', :with => 'this is the address for the project'
@@ -90,12 +90,12 @@ describe "LinkTests" do
       click_button 'Save'
       save_and_open_page
       #wrong data
-      visit projects_path(:customer_id => @cust.id)
+      visit ext_construction_projectx.projects_path(:customer_id => @cust.id)
       save_and_open_page
-      page.should have_content('Projects')
+      expect(page).to have_content('Projects')
       click_link 'New Project'
       save_and_open_page
-      page.should have_content('New Project')
+      expect(page).to have_content('New Project')
       fill_in 'project_name', :with => ''
       #fill_in 'project_customer_id', :with => @cust.id
       fill_in 'project_construction_address', :with => 'this is the address for the project'

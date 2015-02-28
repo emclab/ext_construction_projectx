@@ -1,3 +1,3 @@
 module ExtConstructionProjectx
-  VERSION = "3.2.12.04"
+  VERSION = "01"
 end

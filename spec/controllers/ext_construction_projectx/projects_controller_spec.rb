@@ -1,10 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module ExtConstructionProjectx
-  describe ProjectsController do
+  RSpec.describe ProjectsController, type: :controller do
+    routes {ExtConstructionProjectx::Engine.routes}
     before(:each) do
-      controller.should_receive(:require_signin)
-      controller.should_receive(:require_employee)
+      expect(controller).to receive(:require_signin)
+      expect(controller).to receive(:require_employee)
     end
     before(:each) do
       @pagination_config = FactoryGirl.create(:engine_config, :engine_name => nil, :engine_version => nil, :argument_name => 'pagination', :argument_value => 30)
@@ -29,8 +30,8 @@ module ExtConstructionProjectx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id,  :project_num => '23444',  :name => 'newnew')
-        get 'index' , {:use_route => :ext_construction_projectx}
-        assigns(:projects).should =~ [qs, qs1]       
+        get 'index' 
+        expect(assigns(:projects)).to match_array([qs, qs1])       
       end
       
       it "should return non-cancelled project" do
@@ -40,8 +41,8 @@ module ExtConstructionProjectx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => true, :last_updated_by_id => @u.id,  :project_num => '4355556', :name => 'newnew')
-        get 'index' , {:use_route => :ext_construction_projectx}
-        assigns(:projects).should eq([qs])
+        get 'index' 
+        expect(assigns(:projects)).to eq([qs])
       end
       
     end
@@ -53,8 +54,8 @@ module ExtConstructionProjectx
         :sql_code => "")        
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        get 'new' , {:use_route => :ext_construction_projectx}
-        response.should be_success
+        get 'new' 
+        expect(response).to be_success
       end
            
     end
@@ -66,8 +67,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:ext_construction_projectx_project)
-        get 'create' , {:use_route => :ext_construction_projectx,  :project => qs}
-        response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        get 'create' , { :project => qs}
+        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       end
       
       it "should render 'new' if data error" do
@@ -76,8 +77,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:ext_construction_projectx_project, :name => nil)
-        get 'create' , {:use_route => :ext_construction_projectx,  :project => qs}
-        response.should render_template("new")
+        get 'create' , { :project => qs}
+        expect(response).to render_template("new")
       end
     end
   
@@ -89,8 +90,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :customer_id => @cust.id)
-        get 'edit' , {:use_route => :ext_construction_projectx,  :id => qs.id}
-        response.should be_success
+        get 'edit' , { :id => qs.id}
+        expect(response).to be_success
       end
       
     end
@@ -103,8 +104,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
-        get 'update' , {:use_route => :ext_construction_projectx,  :id => qs.id, :project => {:name => 'newnew'}}
-        response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        get 'update' , { :id => qs.id, :project => {:name => 'newnew'}}
+        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       end
       
       it "should render 'new' if data error" do
@@ -113,8 +114,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
-        get 'update' , {:use_route => :ext_construction_projectx,  :id => qs.id, :project => {:name => nil}}
-        response.should render_template("edit")
+        get 'update' , { :id => qs.id, :project => {:name => nil}}
+        expect(response).to render_template("edit")
       end
     end
   
@@ -126,8 +127,8 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
-        get 'show' , {:use_route => :ext_construction_projectx,  :id => qs.id}
-        response.should be_success
+        get 'show' , { :id => qs.id}
+        expect(response).to be_success
       end
     end
   end
