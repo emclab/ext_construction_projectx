@@ -18,6 +18,7 @@ module ExtConstructionProjectx
       @u = FactoryGirl.create(:user, :user_levels => [ul], :user_roles => [ur])
       @cust = FactoryGirl.create(:kustomerx_customer)
       
+      session[:user_role_ids] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id).user_role_ids
     end
       
     render_views
@@ -27,7 +28,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ExtConstructionProjectx::Project.where(:cancelled => false).order('id')")     
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id,  :project_num => '23444',  :name => 'newnew')
         get 'index' 
@@ -38,7 +38,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "ExtConstructionProjectx::Project.where(:cancelled => false).order('id')")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id)
         qs1 = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => true, :last_updated_by_id => @u.id,  :project_num => '4355556', :name => 'newnew')
         get 'index' 
@@ -53,7 +52,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         get 'new' 
         expect(response).to be_success
       end
@@ -65,7 +63,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:ext_construction_projectx_project)
         get 'create' , { :project => qs}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
@@ -75,7 +72,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.attributes_for(:ext_construction_projectx_project, :name => nil)
         get 'create' , { :project => qs}
         expect(response).to render_template("new")
@@ -88,7 +84,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project, :customer_id => @cust.id)
         get 'edit' , { :id => qs.id}
         expect(response).to be_success
@@ -102,7 +97,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
         get 'update' , { :id => qs.id, :project => {:name => 'newnew'}}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
@@ -112,7 +106,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
         get 'update' , { :id => qs.id, :project => {:name => nil}}
         expect(response).to render_template("edit")
@@ -125,7 +118,6 @@ module ExtConstructionProjectx
         user_access = FactoryGirl.create(:user_access, :action => 'show', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")        
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         qs = FactoryGirl.create(:ext_construction_projectx_project)
         get 'show' , { :id => qs.id}
         expect(response).to be_success
