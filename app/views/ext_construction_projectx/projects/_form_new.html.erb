@@ -2,28 +2,50 @@
   <%= render inline: @erb_code %>
   
 <% else %>
-<%= simple_form_for @project do |f| %>
-  <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
+<div class="container-fluid">
+  <div class="page-header clearfix">
+    <div class="pull-left">
+    <h1><%=@title%><small></small></h1>
+    </div>
+  </div>
+<%= simple_form_for @project, html: { class: 'form-horizontal col-sm-6' },
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  
+  <div class="form-inputs">
+    <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
               :label => t('Customer'), :placeholder => t('Enter Customer Keyword'), :required => true unless @customer%>
-  <%= f.input :customer_name, :label => t('Customer'), :readonly => true, :input_html => {:value => @customer.short_name} if @customer%>
-  <%= f.input :customer_contact, :label => t('Customer Contact'), :input_html => { :rows => 3} %>
-  <%= f.input :customer_id, :as => :hidden, :readonly => true, :input_html => {:value => @customer.id} if @customer%>
-  <%= f.input :name, :label => t('Project Name') %> 
-  <%= f.input :project_desp, :label => t('Project Description'), :input_html => { :rows => 3} %> 
-  <%= f.input :construction_spec, :label => t('Construction Spec'), :input_html => { :rows => 3} %>
-  <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 3} %>
-  <%= f.input :construction_address, :label => t('Construction Address'), :input_html => { :rows => 3} %>
-  <%= f.input :turn_over_requirement, :label => t('Turnover Requirement'), :input_html => { :rows => 3} %>
-  <%= f.input :construction_start_date, :label => t('Construction Start Date'), :as => :string %>
-  <%= f.input :construction_finish_date, :label => t('Construction Finish Date'), :as => :string %>
-  <%= f.input :turn_over_date, :label => t('Turnover Date'), :as => :string %>
-  <%= f.input :awarded, :label => t('Awarded'), :as => :boolean %>
+    <%= f.input :customer_name, :label => t('Customer'), :readonly => true, :input_html => {:value => @customer.short_name} if @customer%>
+    <%= f.input :customer_contact, :label => t('Customer Contact'), :input_html => { :rows => 3} %>
+    <%= f.input :customer_id, :as => :hidden, :readonly => true, :input_html => {:value => @customer.id} if @customer%>
+    <%= f.input :name, :label => t('Project Name') %> 
+    <%= f.input :project_desp, :label => t('Project Description'), :input_html => { :rows => 3} %> 
+    <%= f.input :construction_spec, :label => t('Construction Spec'), :input_html => { :rows => 3} %>
+    <%= f.input :other_spec, :label => t('Other Spec'), :input_html => { :rows => 3} %>
+    <%= f.input :construction_address, :label => t('Construction Address'), :input_html => { :rows => 3} %>
+    <%= f.input :turn_over_requirement, :label => t('Turnover Requirement'), :input_html => { :rows => 3} %>
+    <%= f.input :construction_start_date, :label => t('Construction Start Date'), :as => :string %>
+    <%= f.input :construction_finish_date, :label => t('Construction Finish Date'), :as => :string %>
+    <%= f.input :turn_over_date, :label => t('Turnover Date'), :as => :string %>
+    <%= f.input :awarded, :label => t('Awarded'), :as => :boolean %>
   
   
-  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
-  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
+    <div class="form-actions col-sm-offset-2">
+      <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => "btn btn-default" %>
+      <%= f.button :submit, t('Save'), :class => "btn btn-default" %>
+     
+    </div> 
+  
+  </div>
+ 
 <% end %>
 
+</div>
 <% end %>
 
 
