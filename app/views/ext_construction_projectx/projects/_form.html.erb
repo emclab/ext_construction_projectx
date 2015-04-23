@@ -2,7 +2,22 @@
   <%= render inline: @erb_code %>
   
 <% else %>
-<%= simple_form_for @project do |f| %>
+<div class="container">
+  <div class="page-header clearfix">
+    <div class="pull-left">
+    <h2><%=@title%></h2>
+    </div>
+  </div>
+<%= simple_form_for @project, html: { class: 'form-horizontal col-sm-' + BUTTONS_CLS['form-span#'] },
+    wrapper: :horizontal_form,
+    wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  
+  <div class="form-inputs">
   <%= f.input :name, :label => t('Project Name'), :readonly => readonly?(@project, 'name') %> 
   <%= f.input :customer_name_autocomplete,:input_html => { data: {autocomplete_source: SUBURI + kustomerx.autocomplete_customers_path}},
               :label => t('Customer'), :placeholder => t('Enter Customer Keyword'), :required => true unless readonly?(@project, 'customer_id')%>
@@ -24,10 +39,17 @@
   <%= f.input :cancelled_noupdate, :label => t('Cancelled'), :input_html => {:value => (@project.cancelled ? t('Yes') : t('No'))} if readonly?(@project, 'cancelled') %>
   <%= f.input :last_updated_by_name, :label => t('Last Updated By'), :input_html => {:value => @project.last_updated_by.name}, :readonly => true %>
      
-  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
-  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
-    
+  <div class="form-actions col-sm-offset-<%=BUTTONS_CLS['offset#']%>" >
+      <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+      <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
+     
+  </div> 
+  
+  </div>
+ 
 <% end %>
+
+</div>
 
 <% end %>
 

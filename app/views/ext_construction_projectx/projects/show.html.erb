@@ -3,79 +3,136 @@
   
 <% else %>
 <div id="main_body">
-<h4><%= @title %></h4>
-
-<p>
-  <b><%= t('Project Name') %></b>
-  <%= @project.name %>
-</p>
-<p>
-  <b><%= t('Customer') %></b>
-  <%= @project.customer.name %>
-</p>
-<p>
-  <b><%= t('Project Description') %></b>
-  <%= @project.project_desp %>
-</p>
-<p>
-  <b><%= t('Construction Spec') %></b>
-  <%= @project.construction_spec %>
-</p>
-<p>
+<div class="container">
+	<div class="page-header clearfix">
+      <div class="pull-left">
+        <h2><%=@title%></h2>
+      </div>
+    </div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
+    <b><%= t('Project Name') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
+    <%= @project.name %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
+    <b><%= t('Customer') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
+    <%= @project.customer.name %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
+    <b><%= t('Project Description') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
+    <%= @project.project_desp %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
+    <b><%= t('Construction Spec') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
+    <%= @project.construction_spec %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
   <b><%= t('Other Spec') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
   <%= @project.other_spec %>
-</p>
-<p>
+  </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Construction Address') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.construction_address %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Construction Start Date') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.construction_start_date.strftime('%Y/%m/%/d') if @project.construction_start_date.present? %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Construction Finish Date') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.construction_finish_date.strftime('%Y/%m/%/d') if @project.construction_finish_date.present? %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Turnover Date') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.turn_over_date.strftime('%Y/%m/%/d') if @project.turn_over_date.present? %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Cancelled') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.cancelled ? t('Yes') : t('No') %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Completed') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.completed ? t('Yes') : t('No') %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
     <b><%= t('Awarded') %></b>
+    </div>
+    <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
     <%= @project.awarded ? t('Yes') : t('No') %>
-</p>
-<p>
+    </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
   <b><%= t('Last Updated By') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
   <%= @project.last_updated_by.name %>
-</p>
-<p>
-  <b><%= t('LOG：') %></b>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-<%=BUTTONS_CLS['left-span#']%> form-group">
+  <b><%= t('LOG') %></b>
+  </div>
+  <div class="col-sm-<%=BUTTONS_CLS['right-span#']%> form-group">
   <% Commonx::Log.where('resource_id = ? AND resource_name = ?', @project.id, params[:controller].sub('/', '_')).order("created_at DESC").each do |t| %>
     <li><%= t.created_at.strftime("%Y/%m/%d") %>,&nbsp; <%= t.last_updated_by.name %>,&nbsp; <%= t.log %></li>
   <% end %>
-</p>
+  </div>
+</div>
 
-<table class="table table-striped">
-  <tr>
-    <th>
-    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+   <div class="row">
+    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => 'btn btn-default'%>
     	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     	<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @project.id, :resource_name => params[:controller], :subaction => 'project',
-    	     :format => :js), :remote => true, :id => 'new_log_link' , :class => BUTTONS_CLS['action'] if has_action_right?('create_project', 'commonx/logs') %>
-    </th>
-  </tr>
-</table>
+    	     :format => :js), :remote => true, :id => 'new_log_link' , :class => 'btn btn-default' if has_action_right?('create_project', 'commonx/logs') %>
+    </div>
 
 
+</div>
 </div>
 
 <% end %>

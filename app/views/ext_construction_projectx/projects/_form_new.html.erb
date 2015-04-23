@@ -2,13 +2,13 @@
   <%= render inline: @erb_code %>
   
 <% else %>
-<div class="container-fluid">
+<div class="container">
   <div class="page-header clearfix">
     <div class="pull-left">
-    <h1><%=@title%><small></small></h1>
+    <h2><%=@title%></h2>
     </div>
   </div>
-<%= simple_form_for @project, html: { class: 'form-horizontal col-sm-6' },
+<%= simple_form_for @project, html: { class: 'form-horizontal col-sm-' + BUTTONS_CLS['form-span#'] },
     wrapper: :horizontal_form,
     wrapper_mappings: {
     check_boxes: :horizontal_radio_and_checkboxes,
@@ -35,9 +35,9 @@
     <%= f.input :awarded, :label => t('Awarded'), :as => :boolean %>
   
   
-    <div class="form-actions col-sm-offset-2">
-      <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => "btn btn-default" %>
-      <%= f.button :submit, t('Save'), :class => "btn btn-default" %>
+    <div class="form-actions col-sm-offset-<%=BUTTONS_CLS['offset#']%>" >
+      <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+      <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
      
     </div> 
   
