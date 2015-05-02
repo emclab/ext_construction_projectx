@@ -22,7 +22,7 @@ module ExtConstructionProjectx
 
 
     def create
-      @project = ExtConstructionProjectx::Project.new(params[:project], :as => :role_new)
+      @project = ExtConstructionProjectx::Project.new(new_params)
       @project.last_updated_by_id = session[:user_id]
       if @project.save
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
@@ -45,7 +45,7 @@ module ExtConstructionProjectx
     def update
         @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
         @project.last_updated_by_id = session[:user_id]
-        if @project.update_attributes(params[:project], :as => :role_update)
+        if @project.update_attributes(edit_params)
           redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
         else
           flash[:notice] = t('Data Error. Not Updated!')
@@ -66,5 +66,20 @@ module ExtConstructionProjectx
       @customer = ExtConstructionProjectx.customer_class.find_by_id(params[:customer_id]) if params[:customer_id].present?
       @customer = ExtConstructionProjectx.customer_class.find_by_id(ExtConstructionProjectx::Project.find_by_id(params[:id]).customer_id) if params[:id].present?
     end
+    
+    private
+    
+    def new_params
+      params.require(:project).permit(:awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :project_coordinator_id,
+                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :sales_id,
+                    :turn_over_requirement, :category_id, :project_desp)
+    end
+    
+    def edit_params
+      params.require(:project).permit(:awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :project_coordinator_id,
+                    :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :sales_id,
+                    :turn_over_requirement, :category_id, :project_desp)
+    end
+    
   end
 end
