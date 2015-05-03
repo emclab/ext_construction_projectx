@@ -7,8 +7,8 @@
   BUTTONS_CLS = {'default' => 'btn',
                  'action'       => 'btn btn-primary',
                  'right-span#'         => '2', 
-               'left-span#'         => '6', 
-               'offset#'         => '2',
-               'form-span#'         => '4' }
+                 'left-span#'         => '6', 
+                 'offset#'         => '2',
+                 'form-span#'         => '4' }
 
 

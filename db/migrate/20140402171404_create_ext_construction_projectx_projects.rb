@@ -34,5 +34,6 @@ class CreateExtConstructionProjectxProjects < ActiveRecord::Migration
     add_index :ext_construction_projectx_projects, :name
     add_index :ext_construction_projectx_projects, :sales_id
     add_index :ext_construction_projectx_projects, :project_coordinator_id, :name => :ext_construction_projectx_coordinator
+    add_index :ext_construction_projectx_projects, :category_id
   end
 end
