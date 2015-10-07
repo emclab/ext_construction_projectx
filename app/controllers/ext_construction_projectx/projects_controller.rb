@@ -61,6 +61,17 @@ module ExtConstructionProjectx
       @erb_code = find_config_const('project_show_view', 'ext_construction_projectx')
     end
     
+    def destroy
+      @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
+      @project.transaction do
+        wf = Authentify::AuthentifyUtility.find_config_const('project_delete_related', params[:controller])  #code for all deleting related records in, for ex, payment_requestx
+        eval(wf) if wf.present?
+        Commonx::Log.where("resource_id = ? AND resource_name = ?", @project.id, params[:controller]).delete_all  #will trigger if error.
+        @project.destroy
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
+      end
+    end
+    
     protected
     def load_parent_record
       @customer = ExtConstructionProjectx.customer_class.find_by_id(params[:customer_id]) if params[:customer_id].present?

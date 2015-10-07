@@ -123,5 +123,16 @@ module ExtConstructionProjectx
         expect(response).to be_success
       end
     end
+    
+    describe "GET 'destroy'" do
+      it "returns http success" do
+        user_access = FactoryGirl.create(:user_access, :action => 'destroy', :resource =>'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "")
+        session[:user_id] = @u.id
+        q = FactoryGirl.create(:ext_construction_projectx_project)
+        get 'destroy', {:id => q.id }
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
+      end
+    end
   end
 end
