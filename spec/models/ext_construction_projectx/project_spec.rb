@@ -57,5 +57,11 @@ module ExtConstructionProjectx
       c = FactoryGirl.build(:ext_construction_projectx_project, :category_id => 0)
       expect(c).not_to be_valid
     end
+    
+    it "should not be duplicate with short name" do
+      c0 = FactoryGirl.create(:ext_construction_projectx_project, :short_name => 'A name')
+      c = FactoryGirl.build(:ext_construction_projectx_project, :short_name => 'a name', :name => 'a new')
+      expect(c).not_to be_valid
+    end
   end
 end

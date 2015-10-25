@@ -83,13 +83,13 @@ module ExtConstructionProjectx
     def new_params
       params.require(:project).permit(:awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :project_coordinator_id,
                     :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :sales_id,
-                    :turn_over_requirement, :category_id, :project_desp)
+                    :turn_over_requirement, :category_id, :project_desp, :short_name)
     end
     
     def edit_params
       params.require(:project).permit(:awarded, :cancelled, :completed, :construction_address, :construction_finish_date, :construction_spec, :construction_start_date, :project_coordinator_id,
                     :customer_contact, :customer_id, :last_updated_by_id, :name, :note, :other_spec, :project_num, :status_id, :turn_over_date, :sales_id,
-                    :turn_over_requirement, :category_id, :project_desp)
+                    :turn_over_requirement, :category_id, :project_desp, :short_name)
     end
     
   end
