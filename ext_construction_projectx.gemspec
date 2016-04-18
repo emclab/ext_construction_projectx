@@ -7,11 +7,11 @@ require "ext_construction_projectx/version"
 Gem::Specification.new do |s|
   s.name        = "ext_construction_projectx"
   s.version     = ExtConstructionProjectx::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ExtConstructionProjectx."
-  s.description = "TODO: Description of ExtConstructionProjectx."
+  s.authors     = ["Your name"]
+  s.email       = ["Your@email.com"]
+  s.homepage    = "http://home.com"
+  s.summary     = "Summary of ExtConstructionProjectx."
+  s.description = "Description of ExtConstructionProjectx."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
