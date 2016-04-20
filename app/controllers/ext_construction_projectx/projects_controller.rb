@@ -10,14 +10,14 @@ module ExtConstructionProjectx
       @projects =  params[:ext_construction_projectx_projects][:model_ar_r]
       @projects = @projects.where(:customer_id => @customer.id) if @customer
       @projects = @projects.page(params[:page]).per_page(@max_pagination)
-      @erb_code = find_config_const('project_index_view', 'ext_construction_projectx')
+      @erb_code = find_config_const('project_index_view', session[:fort_token], 'ext_construction_projectx')
     end
 
     def new
       @title = t('New Project')
       @project = ExtConstructionProjectx::Project.new
-      @erb_code = find_config_const('project_new_view', 'ext_construction_projectx')
-      @js_erb_code = find_config_const('project_new_js_view', 'ext_construction_projectx')
+      @erb_code = find_config_const('project_new_view', session[:fort_token], 'ext_construction_projectx')
+      @js_erb_code = find_config_const('project_new_js_view', session[:fort_token], 'ext_construction_projectx')
     end
 
 
@@ -25,11 +25,11 @@ module ExtConstructionProjectx
       @project = ExtConstructionProjectx::Project.new(new_params)
       @project.last_updated_by_id = session[:user_id]
       if @project.save
-        redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       else
         flash[:notice] = t('Data Error. Not Saved!')
-        @erb_code = find_config_const('project_new_view', 'ext_construction_projectx')
-        @js_erb_code = find_config_const('project_new_js_view', 'ext_construction_projectx')
+        @erb_code = find_config_const('project_new_view', session[:fort_token], 'ext_construction_projectx')
+        @js_erb_code = find_config_const('project_new_js_view', session[:fort_token], 'ext_construction_projectx')
         @customer = ExtConstructionProjectx.customer_class.find_by_id(params[:project][:customer_id]) if params[:project].present? && params[:project][:customer_id].present?
         render 'new'
       end
@@ -38,19 +38,19 @@ module ExtConstructionProjectx
     def edit
       @title = t('Edit Project')
       @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
-      @erb_code = find_config_const('project_edit_view', 'ext_construction_projectx')
-      @js_erb_code = find_config_const('project_edit_js_view', 'ext_construction_projectx')
+      @erb_code = find_config_const('project_edit_view', session[:fort_token], 'ext_construction_projectx')
+      @js_erb_code = find_config_const('project_edit_js_view', session[:fort_token], 'ext_construction_projectx')
     end
 
     def update
         @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
         @project.last_updated_by_id = session[:user_id]
         if @project.update_attributes(edit_params)
-          redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+          redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
         else
           flash[:notice] = t('Data Error. Not Updated!')
-          @erb_code = find_config_const('project_edit_view', 'ext_construction_projectx')
-          @js_erb_code = find_config_const('project_edit_js_view', 'ext_construction_projectx')
+          @erb_code = find_config_const('project_edit_view', session[:fort_token], 'ext_construction_projectx')
+          @js_erb_code = find_config_const('project_edit_js_view', session[:fort_token], 'ext_construction_projectx')
           render 'edit'
         end
     end
@@ -58,15 +58,15 @@ module ExtConstructionProjectx
     def show
       @title = t('Project Info')
       @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
-      @erb_code = find_config_const('project_show_view', 'ext_construction_projectx')
+      @erb_code = find_config_const('project_show_view', session[:fort_token], 'ext_construction_projectx')
     end
     
     def destroy
       @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
       @project.transaction do
-        wf = Authentify::AuthentifyUtility.find_config_const('project_delete_related', params[:controller])  #code for all deleting related records in, for ex, payment_requestx
+        wf = find_config_const('project_delete_related', session[:fort_token], params[:controller])  #code for all deleting related records in, for ex, payment_requestx
         eval(wf) if wf.present?
-        Commonx::Log.where("resource_id = ? AND resource_name = ?", @project.id, params[:controller]).delete_all  #will trigger if error.
+        Commonx::Log.where("resource_id = ? AND resource_name = ? AND fort_token = ?", @project.id, params[:controller], session[:fort_token]).delete_all  #will trigger if error.
         @project.destroy
         redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
       end

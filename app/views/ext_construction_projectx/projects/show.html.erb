@@ -1,4 +1,4 @@
-<% if false && @view_in_config && @erb_code %>
+<% if @erb_code %>
   <%= render inline: ERB.new(@erb_code).result(binding) %>
   
 <% else %>
@@ -127,7 +127,7 @@
    <div class="row">
     	<%= link_to t('Back'), SUBURI + "/view_handler?index=0", :id => 'close', :class => 'btn btn-default'%>
     	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<%= link_to t('File Upload'), SUBURI + "/view_handler?index=1&url=#{CGI.escape file_uploaderx.new_uploaded_file_path(resource_id: @project.id, resource_string: params[:controller])}", :class => 'btn btn-default'%>
+    	<%#= link_to t('File Upload'), SUBURI + "/view_handler?index=1&url=#{CGI.escape file_uploaderx.new_uploaded_file_path(resource_id: @project.id, resource_string: params[:controller])}", :class => 'btn btn-default'%>
     	<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @project.id, :resource_name => params[:controller], :subaction => 'project',
     	     :format => :js), :remote => true, :id => 'new_log_link' , :class => 'btn btn-default' if has_action_right?('create_project', 'commonx/logs') %>
     </div>

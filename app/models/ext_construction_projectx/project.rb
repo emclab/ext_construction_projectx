@@ -23,13 +23,15 @@ module ExtConstructionProjectx
     validates :category_id, :numericality => {:greater_than => 0, :only_integer => true}, :if => 'category_id.present?'
     validate :dynamic_validate 
     
+    default_scope {where(fort_token: Thread.current[:fort_token])}
+    
     def dynamic_validate
-      wf = Authentify::AuthentifyUtility.find_config_const('dynamic_validate', 'ext_construction_projectx')
+      wf = Authentify::AuthentifyUtility.find_config_const('dynamic_validate', self.fort_token, 'ext_construction_projectx')
       eval(wf) if wf.present?
     end
     
     def default_init
-      project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', 'ext_construction_projectx')
+      project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', self.fort_token, 'ext_construction_projectx')
       self.project_num = eval(project_num_time_gen) if project_num_time_gen.present?
     end
     

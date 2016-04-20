@@ -36,6 +36,7 @@ RSpec.describe "LinkTests", type: :request do
       ul = FactoryGirl.build(:user_level, :sys_user_group_id => ug.id)
       @u = FactoryGirl.create(:user, :user_levels => [ul], :user_roles => [ur])
       
+      config_entry = FactoryGirl.create(:engine_config, :engine_name => 'rails_app', :engine_version => nil, :argument_name => 'SESSION_TIMEOUT_MINUTES', :argument_value => 30)
       ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,
            :sql_code => "ExtConstructionProjectx::Project.where(:cancelled => false).order('id')")
       ua1 = FactoryGirl.create(:user_access, :action => 'create', :resource => 'ext_construction_projectx_projects', :role_definition_id => @role.id, :rank => 1,

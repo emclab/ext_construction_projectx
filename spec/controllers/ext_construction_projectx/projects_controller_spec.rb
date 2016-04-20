@@ -19,6 +19,7 @@ module ExtConstructionProjectx
       @cust = FactoryGirl.create(:kustomerx_customer)
       
       session[:user_role_ids] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id).user_role_ids
+      session[:fort_token] = @u.fort_token
     end
       
     render_views
@@ -65,7 +66,7 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         qs = FactoryGirl.attributes_for(:ext_construction_projectx_project)
         get 'create' , { :project => qs}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       end
       
       it "should render 'new' if data error" do
@@ -99,7 +100,7 @@ module ExtConstructionProjectx
         session[:user_id] = @u.id
         qs = FactoryGirl.create(:ext_construction_projectx_project)
         get 'update' , { :id => qs.id, :project => {:name => 'newnew'}}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
       end
       
       it "should render 'new' if data error" do
