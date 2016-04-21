@@ -24,6 +24,7 @@ module ExtConstructionProjectx
     def create
       @project = ExtConstructionProjectx::Project.new(new_params)
       @project.last_updated_by_id = session[:user_id]
+      @project.fort_token = session[:fort_token]
       if @project.save
         redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       else

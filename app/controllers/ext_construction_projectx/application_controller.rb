@@ -23,7 +23,7 @@ module ExtConstructionProjectx
     end
     
     def return_resources_by_access_right(resource_string)  #ex, kustomerx/customers     
-      access_rights, model_ar_r, has_record_access = access_right_finder('index', resource_string, session[:user_role_ids])
+      access_rights, model_ar_r, has_record_access = access_right_finder('index', resource_string, session[:user_role_ids], session[:fort_token])
       return [] if access_rights.blank?
       return model_ar_r #instance_eval(access_rights.sql_code) #.present?
     end
