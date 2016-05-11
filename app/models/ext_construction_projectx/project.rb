@@ -12,8 +12,8 @@ module ExtConstructionProjectx
     belongs_to :project_coordinator, :class_name => 'Authentify::User'
     
     validates :name, :presence => true,
-                     :uniqueness => {:case_sensitive => false, :message => I18n.t('Duplicate Name!')}
-    validates :short_name, :uniqueness => {:case_sensitive => false, :message => I18n.t('Duplicate Short Name!')}, :if => 'short_name.present?'
+                     :uniqueness => {:scope => :fort_token, :case_sensitive => false, :message => I18n.t('Duplicate Name!')}
+    validates :short_name, :uniqueness => {:scope => :fort_token, :case_sensitive => false, :message => I18n.t('Duplicate Short Name!')}, :if => 'short_name.present?'
     validates :construction_address, :construction_spec, :presence => true  #, :project_num 
     validates :customer_id, :presence => true,
                             :numericality => {:greater_than => 0, :only_integer => true} 
