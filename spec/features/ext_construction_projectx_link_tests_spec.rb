@@ -61,6 +61,9 @@ RSpec.describe "LinkTests", type: :request do
       qs = FactoryGirl.create(:ext_construction_projectx_project, :cancelled => false, :last_updated_by_id => @u.id, :customer_id => @cust.id)
       
       visit ext_construction_projectx.projects_path
+      expect(Authentify::SysLog.all.count).to eq(1)
+      expect(Authentify::SysLog.all.first.resource).to eq('ext_construction_projectx/projects')
+      expect(Authentify::SysLog.all.first.user_id).to eq(@u.id)
       click_link qs.id.to_s
       expect(page).to have_content('Project Info')
       click_link 'New Log'
