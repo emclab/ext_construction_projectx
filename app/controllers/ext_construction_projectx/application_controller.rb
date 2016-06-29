@@ -15,6 +15,8 @@ module ExtConstructionProjectx
     before_action :view_in_config?
     before_action :page_params, :only => :index
     
+    helper_method :return_misc_definitions, :return_users
+    
     protected
   
     def max_pagination
