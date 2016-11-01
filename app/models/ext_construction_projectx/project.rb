@@ -34,13 +34,6 @@ module ExtConstructionProjectx
       project_num_time_gen = Authentify::AuthentifyUtility.find_config_const('project_num_time_gen', self.fort_token, 'ext_construction_projectx')
       self.project_num = eval(project_num_time_gen) if project_num_time_gen.present?
     end
-    
-    def customer_name_autocomplete
-      self.customer.try(:name)
-    end
-
-    def customer_name_autocomplete=(name)
-      self.customer = ExtConstructionProjectx.customer_class.find_by_name(name) if name.present?
-    end                         
+      
   end
 end
