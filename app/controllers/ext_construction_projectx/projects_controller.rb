@@ -66,7 +66,7 @@ module ExtConstructionProjectx
     def destroy
       @project = ExtConstructionProjectx::Project.find_by_id(params[:id])
       @project.transaction do
-        wf = find_config_const('project_delete_related', session[:fort_token], params[:controller])  #code for all deleting related records in, for ex, payment_requestx
+        wf = find_config_const('project_delete_related', session[:fort_token], 'ext_construction_projectx')  #code for all deleting related records in, for ex, payment_requestx
         eval(wf) if wf.present?
         Commonx::Log.where("resource_id = ? AND resource_name = ? AND fort_token = ?", @project.id, params[:controller], session[:fort_token]).delete_all  #will trigger if error.
         @project.destroy
