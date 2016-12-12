@@ -20,7 +20,7 @@ module ExtConstructionProjectx
     protected
   
     def max_pagination
-      @max_pagination = find_config_const('pagination')
+      @max_pagination = find_config_const('pagination').to_i
     end
     
     def view_in_config?
